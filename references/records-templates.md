@@ -10,7 +10,7 @@
 
 ### 0.1 最小骨架（init 落盘）
 
-一般项目的骨架由 `/records-init` 一次建好（`scripts/init-records.sh` / `scripts/init-records.ps1`）：
+一般项目的骨架由配套 skill `records-init`（`/skill:records-init`）一次建好（`scripts/init-records.sh` / `scripts/init-records.ps1`）：
 
 | 落盘 | 初始内容 | 说明 |
 | --- | --- | --- |

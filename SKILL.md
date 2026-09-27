@@ -1,8 +1,6 @@
 ---
 name: project-records
 description: >-
-  【指令】`/records-init`（或「初始化记录」）＝在当前项目根建最小骨架（records/SPEC.md 草稿 +
-  records/任务计划.md + records/变更/），只补缺不覆盖，不初始化 Vault。
   【是什么】开发记录跟着项目走——写在项目根的 records/ 下（代码仓、策划目录、数据抓取目录都一样；
   Vault 里只装记录的项目目录，直接就是记录根）。管 SPEC、变更、任务计划、验证证据与 handoff，
   让范围、进度与归属在多个 Agent 之间不漂移。记录是否纳入 git、是否公开，由你与用户协商，本 skill 不规定。
@@ -53,15 +51,7 @@ description: >-
 
 ## 初始化记录（init）
 
-触发词：`/skill:records-init`（或说 `/records-init`、`records-init`、「初始化记录」）——用户说出口就**直接执行**，不再二次确认。
-
-这件事由**配套 skill `records-init`** 负责（与本体**平级**安装到同一个 skills 目录；仓库里它在 `records-init/`，与本文件同目录），完整说明见 `records-init/SKILL.md`。要点：
-
-- **脚本在父 skill 的 `scripts/`**：平级安装时 `bash "${KIMI_SKILL_DIR}/../project-records/scripts/init-records.sh"`（Windows 用 `scripts/init-records.ps1`）；动手前先确认路径存在；
-- **落盘**：`records/SPEC.md`（草稿，`状态: 待确认`）、`records/任务计划.md`、`records/变更/.gitkeep`，骨架模板在 `scripts/skeleton/`；
-- **只补缺、不覆盖**：已有文件原样保留，重复运行只输出「跳过」；脚本不动 `.gitignore`、不 `git add`；
-- **只管当前项目目录**：记录根本身在 Vault 内的项目目录，由你按 `references/records-templates.md` 手工建，先经用户确认；
-- **建完接着做**：起草 `SPEC.md` 的「系统是什么」「当前阶段与范围」并请用户确认，再按「开发流程」认领第一个变更；向用户回报新建与跳过的文件清单。
+建骨架这件事由**配套 skill `records-init`** 负责（与本体**平级**安装到同一个 skills 目录；仓库里它在 `records-init/`，与本文件同目录）：调用 `/skill:records-init`，或用户说「初始化记录」时，由它建 `records/SPEC.md`（草稿，`状态: 待确认`）+ `records/任务计划.md` + `records/变更/.gitkeep`，只补缺、不覆盖、可重复运行。用法与规则见 `records-init/SKILL.md`，本文件不重复。
 
 ## 使用前提（每次触发先执行）
 
@@ -70,7 +60,7 @@ description: >-
 1. **项目根**：优先当前工作目录（在 git 仓库内时用仓库根，没有 git 就用当前目录）；用户指定了项目或目录的，以用户为准——**拿不准就问，别自己挑**；
 2. 按上表确定记录位置；记录位于 Vault 内时，从技能目录 `config.json` 读 `vaultRoot` 拼出路径；
 3. **读不到 `config.json` 或其中的 `vaultRoot`** → 不要猜路径，直接告知用户缺配置，并给修复办法：把技能目录里的 `config.example.json` 复制为 `config.json`，把 `vaultRoot` 填成自己的 Vault 路径；
-4. `records/`（或 Vault 内的项目目录）不存在时 → 一般项目跑 `/records-init`（见上一节）；记录根在 Vault 内的项目目录按 `references/records-templates.md` 手工建最小骨架（先经用户确认）；
+4. `records/`（或 Vault 内的项目目录）不存在时 → 一般项目交给配套 skill `records-init`（`/skill:records-init`）；记录根在 Vault 内的项目目录按 `references/records-templates.md` 手工建最小骨架（先经用户确认）；
 5. **记录位置不可读或不可写** → 明确告知用户这是 skill 故障，并让用户选择：修好后重试，或本次不记录继续开发（继续时必须在最终回复注明「本次未写入记录」）。**不得静默跳过、不得假装已记录**；
 6. 读 `SPEC.md`、`任务计划.md` 与在途变更；在途变更被其他 Agent 认领时不得覆盖：另选一个，或先协调。
 

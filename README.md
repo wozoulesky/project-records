@@ -6,7 +6,7 @@
 
 ## 它做什么
 
-- **一条命令建骨架**：`/records-init`（说「初始化记录」同义）跑 `scripts/init-records.sh` 或 `scripts/init-records.ps1`，在当前项目根建 `records/SPEC.md`（草稿）+ `records/任务计划.md` + `records/变更/`；只补缺、不覆盖、可重复运行，不初始化 Vault；
+- **一条命令建骨架**：配套 skill `records-init`（`/skill:records-init`）跑 `scripts/init-records.sh` 或 `scripts/init-records.ps1`，在当前项目根建 `records/SPEC.md`（草稿）+ `records/任务计划.md` + `records/变更/`；只补缺、不覆盖、可重复运行，不初始化 Vault；
 - **使用前提**：触发后先**确定记录位置**（项目根 → 记录位置 → 需要时建最小骨架）；位置不可读或不可写就明确告知用户这是 skill 故障（不静默跳过、不假装已记录），再读 `SPEC.md`、`任务计划.md` 与在途变更；
 - **变更单位**：默认单文件 `变更.md`，命中触发线（子项 ≥3 / 需跨会话或跨 Agent 交接 / 范围或验收标准要写进 SPEC / 要留完整验证证据）升级为 `spec.md` + `任务.md` + `handoff.md`；
 - **写入触发对照**：新项目、功能变动、任务推进、计划变化、评审验收、暂停交接——每类场景最少要写什么，`SKILL.md` 里列成表，强制写入，不等用户提醒；
@@ -79,4 +79,4 @@ powershell -NoProfile -File scripts\init-records.ps1 [-Path C:\path\to\project]
 
 本仓库原为 Project OS（本地项目管理工作台：Web + REST API + SQLite + MCP），代码已从 `main` 分支移除，保留在 git 历史与标签 `v1.0.0`–`v1.3.0` 中，不再维护。
 
-此后一度以本机 Obsidian Vault 为唯一项目记录（v1.x 版 Skill）；2026-09-22 起改为**记录跟着项目走**：记录写进项目自身，Vault 只承载记录本就放在 Vault 里的项目与历史归档。同日仓库与 Skill 由 `obsidian-project-management` 改名为 `project-records`（旧地址重定向），新增 `/records-init` 初始化能力；本 Skill 自身的记录也从 Vault 迁到仓库内 `records/`，Vault 旧目录转为只读归档。
+此后一度以本机 Obsidian Vault 为唯一项目记录（v1.x 版 Skill）；2026-09-22 起改为**记录跟着项目走**：记录写进项目自身，Vault 只承载记录本就放在 Vault 里的项目与历史归档。同日仓库与 Skill 由 `obsidian-project-management` 改名为 `project-records`（旧地址重定向），新增 init 初始化能力（配套 skill `records-init`，调用 `/skill:records-init`）；本 Skill 自身的记录也从 Vault 迁到仓库内 `records/`，Vault 旧目录转为只读归档。
